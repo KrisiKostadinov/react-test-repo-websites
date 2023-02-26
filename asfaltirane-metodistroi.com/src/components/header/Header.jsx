@@ -19,14 +19,28 @@ const Header = () => {
       <div className="container mx-auto">
         <div className="py-3 flex w-full h-full justify-between items-center pr-5 pl-3">
           <a href="/" className="w-full max-w-[200px]">
-            <img className="w-full h-full object-cover" src={logo} alt="" />
+            <img src={logo} alt="Асфалтиране Методи Строй" />
           </a>
           <nav>
             <ul className="lg:flex hidden items-center text-yellow-500 font-bold text-lg">
               {navItems.map((item, index) => (
-                <li key={index}>
+                <li className="relative" key={index}>
                   <Link className={NAV_ITEM} to={item.link}>
                     {item.name}
+                    {item.children && (
+                      <ul className="list-children">
+                        {item.children.map((child, index) => (
+                          <li key={index}>
+                            <Link
+                              className="list-children-item"
+                              to={child.link}
+                            >
+                              {child.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </Link>
                 </li>
               ))}
