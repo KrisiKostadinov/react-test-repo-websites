@@ -1,7 +1,22 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import MetaTags from "react-meta-tags";
 
-import { servicesItems, slides, asphaltingsImages } from "../constants";
+import { servicesItems, asphaltingsImages } from "../constants";
+import slide1 from "../assets/images/slider/manual-asphalting.jpg";
+import slide2 from "../assets/images/slider/mashine-asphalting.jpeg";
+
+export const slides = [
+  {
+    background: slide1,
+    heading: "МАШИННО АСФАЛТИРАНЕ",
+    text: "Ние разполагаме с най-съвременните машни и технологии за качествено асфалтиране на различни терени.",
+  },
+  {
+    background: slide2,
+    heading: "РЪЧНО АСФАЛТИРАНЕ",
+    text: "Ние разполагаме с най-съвременните машни и технологии за качествено асфалтиране на различни терени.",
+  },
+];
 
 import servicesBackground from "../assets/images/backgrounds/services-background.jpeg";
 import warning from "../assets/images/warning.png";
@@ -9,41 +24,21 @@ import warning from "../assets/images/warning.png";
 import Digits from "../components/digits/Digits";
 import Quality from "../components/quality/Quality";
 import WhyUs from "../components/why-us/WhyUs";
+import Carousel from "../components/common/Carousel";
+import { useEffect } from "react";
 
 const Home = () => {
-  const [slide, setSlide] = useState();
-  const [slideIndex, setSlideIndex] = useState(0);
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    setSlide(slides[slideIndex]);
-  }, [slideIndex]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (slideIndex === slides.length - 1) return setSlideIndex(0);
-      setSlideIndex(slideIndex + 1);
-    }, 3000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [slideIndex]);
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return (
     <>
-      <main className="w-full">
-        <section
-          className="container mx-auto h-[600px] bg-cover transition-all duration-1000 object-cover"
-          style={{ backgroundImage: `url(${slide?.background})` }}
-        >
-          <div className="w-full h-full flex flex-col justify-center items-center bg-black/40">
-            <h1 className="text-white text-4xl md:text-6xl text-bold text-center">
-              {slide?.heading}
-            </h1>
-            <p className="text-white text-xl py-4 max-w-lg text-center">
-              {slide?.text}
-            </p>
-          </div>
+      <main className="w-full h-auto">
+        <section className="container mx-auto relative h-[40vh] md:h-[60vh] lg:h-[70vh] pt-5 md:pt-10">
+          <Carousel timeout={3000}>{slides}</Carousel>
         </section>
         <section>
           <p className="text-white bg-black text-center text-2xl py-10 mt-5 max-sm:px-5">
@@ -55,6 +50,17 @@ const Home = () => {
             </Link>
           </div>
         </section>
+
+        {/* meta tags */}
+        <MetaTags>
+          <title>Асфалтиране София и страната</title>
+          <link rel="canonical" href="https://asfaltirane-metodigroup.com" />
+          <meta name="description" content="Предлагаме асфалтиране в град София и страната на достъпни цени. Обадете се още сега! 0899 07 67 89" />
+          <meta name="og:title" content="Асфалтиране София и страната" />
+          <meta name="og:description" content="Предлагаме асфалтиране в град София и страната на достъпни цени. Обадете се още сега! 0899 07 67 89" />
+          <meta name="og:url" content="https://asfaltirane-metodigroup.com" />
+        </MetaTags>
+
         <section>
           <div className="mt-10 mb-12 text-center">
             <h2 className="text-3xl md:text-4xl">
@@ -86,9 +92,9 @@ const Home = () => {
                       </p>
                     </div>
                     <div className="text-center text-xl">
-                      <Link className="button-primary" to={item.link}>
+                      <a href={item.link} className="button-primary">
                         Научете повече
-                      </Link>
+                      </a>
                     </div>
                   </li>
                 ))}

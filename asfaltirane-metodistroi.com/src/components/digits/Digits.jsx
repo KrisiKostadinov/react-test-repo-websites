@@ -15,11 +15,11 @@ const Digits = () => {
             </li>
             <li className="flex flex-col items-center justify-center">
               <div className="text-6xl">400+</div>
-              <p className="text-xl">Успешни проекти</p>
+              <p className="text-xl">Успешни проектa</p>
             </li>
             <li className="flex flex-col items-center justify-center">
               <div className="text-6xl">400+</div>
-              <p className="text-xl">Доволни клиенти</p>
+              <p className="text-xl">Доволни клиентa</p>
             </li>
             <li className="flex flex-col items-center justify-center">
               <div className="text-6xl">20+</div>

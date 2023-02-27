@@ -1,20 +1,53 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ClientsReviews from "../../components/clients-reviews/ClientsReviews";
 import Quality from "../../components/quality/Quality";
 import WhyUs from "../../components/why-us/WhyUs";
 import sidewalkAsphalting from "../../assets/images/asphaltings/sidewalk-asphalting.jpeg";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { MetaTags } from "react-meta-tags";
+import { metaTags } from "../../constants";
 
 const Sidewalk = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
   return (
     <>
-      <section className="w-full py-10 max-md:px-10">
+      <MetaTags>
+        <title>
+          Нареждане на тротоари в София и страната - {metaTags.site_name}
+        </title>
+        <link
+          rel="canonical"
+          href="https://asfaltirane-metodigroup.com/narezhdane-na-trotoar"
+        />
+        <meta
+          name="description"
+          content="Нареждане на бордюри и тротоари в град София и страната. Обадете се още сега! 0899 07 67 89"
+        />
+        <meta
+          name="og:title"
+          content={`Нареждане на тротоари в София и страната - ${metaTags.site_name}`}
+        />
+        <meta
+          name="og:description"
+          content="Нареждане на бордюри и тротоари в град София и страната. Обадете се още сега! 0899 07 67 89"
+        />
+        <meta
+          name="og:url"
+          content="https://asfaltirane-metodigroup.com/narezhdane-na-trotoar"
+        />
+      </MetaTags>
+      <section className="w-full py-10 max-md:px-5">
         <div className="container mx-auto">
           <h1 className="text-3xl md:text-4xl">
-            Нареждне на тротоар в Сифия и страната
+            Нареждане на тротоар в София и страната
           </h1>
-          <div className="flex max-md:flex-col-reverse md:justify-between md:gap-10">
-            <div className="md:w-3/5 max-w-[600px]">
+          <div className="grid lg:grid-cols-2 gap-10">
+            <div>
               <p>
                 Асфалтиране София, Полвдив се е доказала като надежна и
                 професионална фирма за асфалтиране и нареждане на тротоари,
@@ -47,11 +80,11 @@ const Sidewalk = () => {
                 </Link>
               </div>
             </div>
-            <div className="md:w-2/5">
+            <div>
               <img
                 className="w-full"
                 src={sidewalkAsphalting}
-                alt="Асфалтиране на улици в Сифия и страната"
+                alt="Асфалтиране на улици в София и страната"
               />
             </div>
           </div>

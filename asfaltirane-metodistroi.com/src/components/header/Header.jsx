@@ -1,93 +1,153 @@
+import React, { useEffect, useState } from "react";
+import { MetaTags } from "react-meta-tags";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
-import { Link } from "react-router-dom";
-import { navItems, menuIcon } from "../../constants";
-import { useState } from "react";
+import { metaTags, navItems } from "../../constants";
 
-const NAV_ITEM =
-  "py-4 px-6 inline-block rounded hover:text-white hover:bg-yellow-500 focus:text-white focus:bg-yellow-500 focus:outline-none transition-colors";
-const MOBILE_CONTAINER =
-  "lg:hidden fixed right-0 h-screen px-5 pt-5 bg-white top-0 shadow-lg flex flex-col text-yellow-500 font-bold text-lg transition-all";
 const Header = () => {
   const [nav, setNav] = useState(false);
+  const [active, setActive] = useState();
+  const { pathname } = useLocation();
 
   const handleClick = () => {
     setNav(!nav);
   };
 
+  useEffect(() => {
+    setActive(pathname);
+  }, [pathname]);
+
   return (
-    <header className="w-full shadow-lg">
+    <div className="bg-white shadow-lg sticky top-0 navbar">
       <div className="container mx-auto">
-        <div className="py-3 flex w-full h-full justify-between items-center pr-5 pl-3">
-          <a href="/" className="w-full max-w-[200px]">
-            <img src={logo} alt="Асфалтиране Методи Строй" />
-          </a>
+        <div className="flex items-center justify-between py-2 max-sm:px-5">
+          <div className="md:max-w-[300px] w-[60%]">
+            <a className="w-full" href="/">
+              <img
+                className="w-full"
+                src={logo}
+                alt="Асфалтиране Методи Строй"
+              />
+            </a>
+            <MetaTags>
+              <meta
+                property="og:image"
+                content="../../assets/images/logo.png"
+              />
+              <meta property="og:image:alt" content={metaTags.site_desc} />
+              <meta name="og:site_name" content={metaTags.site_name} />
+            </MetaTags>
+          </div>
           <nav>
-            <ul className="lg:flex hidden items-center text-yellow-500 font-bold text-lg">
+            <ul className="relative md:flex hidden gap-2 text-lg">
               {navItems.map((item, index) => (
-                <li className="relative" key={index}>
-                  <Link className={NAV_ITEM} to={item.link}>
-                    {item.name}
-                    {item.children && (
-                      <ul className="list-children">
-                        {item.children.map((child, index) => (
+                <li className="group" key={index}>
+                  <Link
+                    className={`flex flex-col items-center py-4 px-2 hover:text-yellow-500 group-hover:text-yellow-500 ${
+                      active === item.link && "text-yellow-500"
+                    }`}
+                    to={item.link}
+                  >
+                    <span>{item.icon}</span>
+                    <span>{item.name}</span>
+                  </Link>
+                  {item.children && (
+                    <>
+                      <ul className="nested-list">
+                        {item.children.map((item, index) => (
                           <li key={index}>
                             <Link
-                              className="list-children-item"
-                              to={child.link}
+                              className={`flex items-center gap-5 w-full py-2 px-4 rounded hover:bg-yellow-500 hover:text-black ${
+                                active === item.link && "text-yellow-500"
+                              }`}
+                              to={item.link}
                             >
-                              {child.name}
+                              <span>
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  strokeWidth={1.5}
+                                  stroke="currentColor"
+                                  className="w-6 h-6"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+                                  />
+                                </svg>
+                              </span>
+                              <span>{item.name}</span>
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
+                </li>
+              ))}
+            </ul>
+            <button className="md:hidden block" onClick={() => handleClick()}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-10 h-10"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                />
+              </svg>
+            </button>
+            <ul
+              className={`${
+                nav ? "translate-x-0" : "translate-x-full"
+              } fixed top-14 right-0 w-[80vw] h-screen bg-white shadow-lg p-5 transition-all`}
+            >
+              <div className="flex flex-col">
+                {navItems.map((item, index) => (
+                  <li className="group" key={index}>
+                    <Link
+                      className={`w-full inline-block py-2 px-5 hover:bg-yellow-500 hover:text-black rounded ${
+                        active === item.link && "text-yellow-500"
+                      }`}
+                      to={item.link}
+                      onClick={() =>
+                        item.locked != true ? handleClick() : null
+                      }
+                    >
+                      {item.name}
+                    </Link>
+                    {item.children && (
+                      <ul className="group-hover:flex hidden flex-col pl-10">
+                        {item.children.map((item, index) => (
+                          <li key={index}>
+                            <Link
+                              className={`w-full inline-block py-2 px-4 rounded hover:bg-yellow-500 hover:text-black ${
+                                active === item.link && "text-yellow-500"
+                              }`}
+                              onClick={() => handleClick()}
+                              to={item.link}
+                            >
+                              {item.name}
                             </Link>
                           </li>
                         ))}
                       </ul>
                     )}
-                  </Link>
-                </li>
-              ))}
-              <li>
-                <Link
-                  className="py-4 px-6 text-white bg-yellow-500 rounded hover:bg-yellow-600 transition-colors"
-                  to={"/contacts"}
-                >
-                  ЗАПИТВАНЕ СЕГА
-                </Link>
-              </li>
+                  </li>
+                ))}
+              </div>
             </ul>
-            <ul
-              className={`${
-                nav ? "translate-x-0" : "translate-x-full"
-              } ${MOBILE_CONTAINER}`}
-            >
-              {navItems.map((item, index) => (
-                <li key={index} className="w-full">
-                  <Link
-                    className="px-5 py-4 inline-block rounded w-full hover:text-white hover:bg-yellow-500 transition-colors"
-                    to={item.link}
-                    onClick={handleClick}
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-              <li className="mt-5 w-full">
-                <Link
-                  className="py-4 px-6 text-white bg-yellow-500 rounded hover:bg-yellow-600 transition-colors"
-                  to={"/contacts"}
-                  onClick={handleClick}
-                >
-                  ЗАПИТВАНЕ СЕГА
-                </Link>
-              </li>
-            </ul>
-            <div
-              className="lg:hidden block cursor-pointer"
-              onClick={handleClick}
-              dangerouslySetInnerHTML={{ __html: menuIcon }}
-            ></div>
           </nav>
         </div>
       </div>
-    </header>
+    </div>
   );
 };
 
