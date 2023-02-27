@@ -1,20 +1,53 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ClientsReviews from "../../components/clients-reviews/ClientsReviews";
 import WhyUs from "../../components/why-us/WhyUs";
 import Quality from "../../components/quality/Quality";
 import bigAsphalting from "../../assets/images/asphaltings/big-asphalting.jpeg";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { MetaTags } from "react-meta-tags";
+import { metaTags } from "../../constants";
 
 const Rouds = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
   return (
     <>
-      <section className="w-full py-10 max-md:px-10">
+      <MetaTags>
+        <title>
+          Асфалтиране на пътища в София и страната - {metaTags.site_name}
+        </title>
+        <link
+          rel="canonical"
+          href="https://asfaltirane-metodigroup.com/asfaltirane-na-patishta"
+        />
+        <meta
+          name="description"
+          content="Предлагаме надеждно асфалтиране с гаранция за качество на достъпни за страната цени. Обадете се още сега! 0899 07 67 89"
+        />
+        <meta
+          name="og:title"
+          content={`Асфалтиране на пътища в София и страната - ${metaTags.site_name}`}
+        />
+        <meta
+          name="og:description"
+          content="Предлагаме надеждно асфалтиране с гаранция за качество на достъпни за страната цени. Обадете се още сега! 0899 07 67 89"
+        />
+        <meta
+          name="og:url"
+          content="https://asfaltirane-metodigroup.com/asfaltirane-na-patishta"
+        />
+      </MetaTags>
+      <section className="w-full py-10 max-md:px-5">
         <div className="container mx-auto">
           <h1 className="text-3xl md:text-4xl">
-            Асфалтиране на пътища в Сифия и страната
+            Асфалтиране на пътища в София и страната
           </h1>
-          <div className="flex max-md:flex-col-reverse md:justify-between md:gap-10">
-            <div className="md:w-3/5 max-w-[600px]">
+          <div className="grid lg:grid-cols-2 gap-10">
+            <div>
               <p>
                 Нашата фирма е специализирана в полагането на асфалт на пътища,
                 улици, нареждане бордюри и др. Ние работим с нови и модерни
@@ -39,11 +72,11 @@ const Rouds = () => {
                 </Link>
               </div>
             </div>
-            <div className="md:w-2/5">
+            <div>
               <img
                 className="w-full"
                 src={bigAsphalting}
-                alt="Асфалтиране на улици в Сифия и страната"
+                alt="Асфалтиране на улици в София и страната"
               />
             </div>
           </div>

@@ -1,20 +1,49 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { MetaTags } from "react-meta-tags";
+
 import ClientsReviews from "../../components/clients-reviews/ClientsReviews";
 import Quality from "../../components/quality/Quality";
 import WhyUs from "../../components/why-us/WhyUs";
 import streetAsphalting from "../../assets/images/asphaltings/street-asphalting.jpeg";
-import { Link } from "react-router-dom";
+import { metaTags } from "../../constants";
 
 const Street = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
   return (
     <>
+      <MetaTags>
+        <title>Асфалтиране на улици в София и страната - {metaTags.site_name}</title>
+        <link
+          rel="canonical"
+          href="https://asfaltirane-metodigroup.com/asfaltirane-na-ulitsi"
+        />
+        <meta
+          name="description"
+          content="Асфалтиране на улици в град София и цялата страна на достъпни цени. Обадете се още сега! 0899 07 67 89"
+        />
+        <meta name="og:title" content={`Асфалтиране на улици в София и страната - ${metaTags.site_name}`} />
+        <meta
+          name="og:description"
+          content="Асфалтиране на улици в град София и цялата страна на достъпни цени. Обадете се още сега! 0899 07 67 89"
+        />
+        <meta
+          name="og:url"
+          content="https://asfaltirane-metodigroup.com/asfaltirane-na-ulitsi"
+        />
+      </MetaTags>
       <section className="w-full py-10 max-md:px-10">
         <div className="container mx-auto">
           <h1 className="text-3xl md:text-4xl">
-            Асфалтиране на улици в Сифия и страната
+            Асфалтиране на улици в София и страната
           </h1>
-          <div className="flex max-md:flex-col-reverse md:justify-between md:gap-10">
-            <div className="md:w-3/5 max-w-[600px]">
+          <div className="grid gap-10 lg:grid-cols-2">
+            <div>
               <p>
                 Нашата фирма е специализирана в асфалтирането на улици, пътища,
                 тротоари, алеи, паркинги, нареждане на бордюри и др. Фирмата ни
@@ -40,11 +69,11 @@ const Street = () => {
                 </Link>
               </div>
             </div>
-            <div className="md:w-2/5">
+            <div>
               <img
                 className="w-full"
                 src={streetAsphalting}
-                alt="Асфалтиране на улици в Сифия и страната"
+                alt="Асфалтиране на улици в София и страната"
               />
             </div>
           </div>
